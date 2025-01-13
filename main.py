@@ -44,39 +44,42 @@ class Turret(pygame.sprite.Sprite):
         self.rect.y = y
         
 
-
+# Constant Intitialzation
 time = 0
 score = 0
-
-
 laser_list = pygame.sprite.Group()
 player = pygame.sprite.Group()
-
 enemies = pygame.sprite.Group()
-
 turretOne = Turret("White", 16, 16, 0, x=450-16/2, y=300-16/2)
-
 player.add(turretOne)
+
 while True:
     scoreboard = my_font.render(f"Score: {score}", False, "White")
     # Debug Mouse Position Coords
     # print(pygame.mouse.get_pos())
     time
     B = pygame.mouse.get_pos()
-    # Statement below is angle debug 
+    # Fill background with black bg
     screen.fill("BLACK")
+    # Adds scoreboard
     screen.blit(scoreboard, (24, 0))
+    # Adds enemies list
     enemies.draw(screen)
+
+    # Checks for quitting via "X" button
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
-    # draw all our elements, and update game aspects
+
+    # Main Game Loop & Logic:
+
     if len(enemies) <= 5:
         # print(len(enemies))
         enemy_y = random.randint(0,600)
         enemy_x = random.randint(0,900)
         binary = random.randint(0,1)
+
         if binary == 0:
             if enemy_y <300:
                 enemy_y = 0
@@ -87,16 +90,18 @@ while True:
                 enemy_x = 0
             else:
                 enemy_x = 900  -16 /2
+        # Enemy Pathfinding Logic using angle calc function        
         C = (enemy_x, enemy_y)
         enemy_angle = (calculate_angle(A, C))
+        # Enemy Template
         enemies.add(Turret("RED", 16, 16, enemy_angle, enemy_x, enemy_y))
-
-
-    enemy_angle = (calculate_angle(A, C))
+    
+    # Laser collision Logic
     if pygame.sprite.groupcollide(laser_list, enemies, True,  True):
          mixer.Channel(1).play(pygame.mixer.Sound("hit.wav"))
          score += 100
          print(score)
+    # Player Rendering
     player.draw(screen)
     click = pygame.mouse.get_pressed()
     if click[0] == True:
@@ -115,6 +120,7 @@ while True:
                 laser_list.add(laser)
                 time = pygame.time.get_ticks() + 200
 
+    # Enemy Movement
     for enemy in enemies:
         enemy_angle = (calculate_angle(A, C))
         enemy.internal_x -= 1.25 * math.cos(enemy.angle)
@@ -129,7 +135,7 @@ while True:
                 enemy.kill()
         if enemy.rect.y <= 0:
                 enemy.kill()
-
+    # Laser Movement
     for laser in laser_list:
             laser_list.draw(screen)
             pygame.display.update()
@@ -147,6 +153,8 @@ while True:
                 laser.kill()
             if laser.rect.y <= 0:
                 laser.kill()
+       
+       # Enemy to player collision logic
     if pygame.sprite.groupcollide(player, enemies, True,  True):
          print(f"The zombies have gotten to you...\nYour Final score was {score}.")
          pygame.quit()
