@@ -5,6 +5,9 @@ import numpy as np
 import math
 from sys import exit
 
+pygame.font.init() 
+my_font = pygame.font.SysFont('Arial', 30)
+
 # Initialize audio
 mixer.init()
 shoot = mixer.music.load("shoot.wav", "hit.wav")
@@ -13,7 +16,6 @@ mixer.Channel(0).set_volume(.3)
 
 # Initialize PyGame
 pygame.init()
-
 
 screen = pygame.display.set_mode((900, 600))
 pygame.display.set_caption("zombies")
@@ -56,12 +58,14 @@ turretOne = Turret("White", 16, 16, 0, x=450-16/2, y=300-16/2)
 
 player.add(turretOne)
 while True:
+    scoreboard = my_font.render(f"Score: {score}", False, "White")
     # Debug Mouse Position Coords
     # print(pygame.mouse.get_pos())
     time
     B = pygame.mouse.get_pos()
     # Statement below is angle debug 
     screen.fill("BLACK")
+    screen.blit(scoreboard, (24, 0))
     enemies.draw(screen)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
