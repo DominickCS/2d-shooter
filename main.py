@@ -30,14 +30,17 @@ class Turret(pygame.sprite.Sprite):
         pygame.draw.rect(self.image, color, pygame.Rect(x,y, width, height))
         self.rect = self.image.get_rect()
 
+
+time = 0
+
 laser_list = pygame.sprite.Group()
 player = pygame.sprite.Group()
 turretOne = Turret("White", 20, 20)
-laser = Turret("White", 10, 1)
 turretOne.rect.x = 450
 turretOne.rect.y = 300
 player.add(turretOne)
 while True:
+    time
     B = pygame.mouse.get_pos()
     # Statement below is angle debug 
     # project_angle = print(round((calculate_angle(A,B))))
@@ -49,16 +52,20 @@ while True:
     # draw all our elements, and update game aspects
     player.draw(screen)
     if event.type == pygame.MOUSEBUTTONDOWN:
-        #print("shooting")
-        #player_sprite_list.add(laser)
-        if len(laser_list) <= 2:
+        # Clock Debugging
+        # print(pygame.time.get_ticks())
+        # print(time)
+        if pygame.time.get_ticks() > time:
+            laser = Turret("White", 10, 1)
             laser_list.add(laser)
+            time = pygame.time.get_ticks() + 500
+            # print(len(laser_list))
             print("shooting")
             # laser.rect.y = random.randint(0, 600)
-            laser_list.draw(screen)
-            pygame.display.update()
             #pygame.time.delay(100)
     for laser in laser_list:
+            laser_list.draw(screen)
+            pygame.display.update()
             laser.rect.x = laser.rect.x + 5
             if laser.rect.x >= 900:
                 laser.kill()
