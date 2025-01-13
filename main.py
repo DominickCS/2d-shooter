@@ -59,7 +59,7 @@ while True:
             exit()
     # draw all our elements, and update game aspects
     if len(enemies) <= 5:
-        print(len(enemies))
+        # print(len(enemies))
         enemy_y = random.randint(0,600)
         enemy_x = random.randint(0,900)
         binary = random.randint(0,1)
@@ -73,11 +73,15 @@ while True:
                 enemy_x = 0
             else:
                 enemy_x = 900  -16 /2
+        C = (enemy_x, enemy_y)
+        enemy_angle = (calculate_angle(A, C))
+        enemies.add(Turret("RED", 16, 16, enemy_angle, enemy_x, enemy_y))
 
 
-        enemies.add(Turret("RED", 16, 16, 0, enemy_x, enemy_y))
-
-    pygame.sprite.groupcollide(laser_list, enemies, False,  True)
+    enemy_angle = (calculate_angle(A, C))
+    if pygame.sprite.groupcollide(laser_list, enemies, True,  True):
+         score += 100
+         print(score)
     player.draw(screen)
     click = pygame.mouse.get_pressed()
     if click[0] == True:
@@ -94,6 +98,21 @@ while True:
                 laser = Turret("White", 4, 4, project_angle , turretOne.rect.x + 4, turretOne.rect.y + 4)
                 laser_list.add(laser)
                 time = pygame.time.get_ticks() + 200
+
+    for enemy in enemies:
+        enemy_angle = (calculate_angle(A, C))
+        enemy.internal_x -= 1 * math.cos(enemy.angle)
+        enemy.internal_y -= 1 * math.sin(enemy.angle)
+        enemy.rect.x = enemy.internal_x
+        enemy.rect.y = enemy.internal_y
+        if enemy.rect.x >= 900:
+                enemy.kill()
+        if enemy.rect.x <= 0:
+                enemy.kill()
+        if enemy.rect.y >= 600:
+                enemy.kill()
+        if enemy.rect.y <= 0:
+                enemy.kill()
 
     for laser in laser_list:
             laser_list.draw(screen)
@@ -112,5 +131,11 @@ while True:
                 laser.kill()
             if laser.rect.y <= 0:
                 laser.kill()
+    if pygame.sprite.groupcollide(player, enemies, True,  True):
+         print(f"The zombies have gotten to you...\nYour Final score was {score}.")
+         pygame.quit()
+         exit()
     pygame.display.update()
     clock.tick(60)
+
+    #Test
