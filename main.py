@@ -60,7 +60,22 @@ while True:
     # draw all our elements, and update game aspects
     if len(enemies) <= 5:
         print(len(enemies))
-        enemies.add(Turret("RED", 16, 16, 0, random.randint(0, 900), random.randint(0,600)))
+        enemy_y = random.randint(0,600)
+        enemy_x = random.randint(0,900)
+        binary = random.randint(0,1)
+        if binary == 0:
+            if enemy_y <300:
+                enemy_y = 0
+            else:
+                enemy_y = 600 - 16 /2
+        else:
+            if enemy_x <450:
+                enemy_x = 0
+            else:
+                enemy_x = 900  -16 /2
+
+
+        enemies.add(Turret("RED", 16, 16, 0, enemy_x, enemy_y))
 
     pygame.sprite.groupcollide(laser_list, enemies, False,  True)
     player.draw(screen)
@@ -83,8 +98,8 @@ while True:
     for laser in laser_list:
             laser_list.draw(screen)
             pygame.display.update()
-            laser.internal_x += 8 * math.cos(laser.angle)
-            laser.internal_y += 8 * math.sin(laser.angle)
+            laser.internal_x += 16 * math.cos(laser.angle)
+            laser.internal_y += 16 * math.sin(laser.angle)
             laser.rect.x = laser.internal_x
             laser.rect.y = laser.internal_y
             # print(laser.rect.x)
