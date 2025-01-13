@@ -9,15 +9,6 @@ screen = pygame.display.set_mode((900, 600))
 pygame.display.set_caption("zombies")
 clock = pygame.time.Clock()
 
-
-# def angle_between_vectors_np(u, v):
-#     u = np.array(u)
-#     v = np.array(v)
-#     cos_theta = np.dot(u, v) / (np.linalg.norm(u) * np.linalg.norm(v))
-#     angle_rad = np.arccos(np.clip(cos_theta, -1.0, 1.0))
-#     angle_deg = np.degrees(angle_rad)
-#     return angle_rad, angle_deg
-
 def calculate_angle(p1, p2) -> float:
     dx = p2[0] - p1[0]
     dy = p2[1] - p1[1]
@@ -48,9 +39,8 @@ turretOne.rect.y = 300
 player.add(turretOne)
 while True:
     B = pygame.mouse.get_pos()
-    # print(B)
-    # print(angle_between_vectors_np(A,B))
-    project_angle = print(round((calculate_angle(A,B))))
+    # Statement below is angle debug 
+    # project_angle = print(round((calculate_angle(A,B))))
     screen.fill("BLACK")
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
