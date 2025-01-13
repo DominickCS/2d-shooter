@@ -1,10 +1,20 @@
 import pygame
+from pygame import mixer
 import random
 import numpy as np
 import math
 from sys import exit
 
+# Initialize audio
+mixer.init()
+shoot = mixer.music.load("shoot.wav", "hit.wav")
+mixer.Channel(1).set_volume(.3) 
+mixer.Channel(0).set_volume(.3)
+
+# Initialize PyGame
 pygame.init()
+
+
 screen = pygame.display.set_mode((900, 600))
 pygame.display.set_caption("zombies")
 clock = pygame.time.Clock()
@@ -80,6 +90,7 @@ while True:
 
     enemy_angle = (calculate_angle(A, C))
     if pygame.sprite.groupcollide(laser_list, enemies, True,  True):
+         mixer.Channel(1).play(pygame.mixer.Sound("hit.wav"))
          score += 100
          print(score)
     player.draw(screen)
@@ -89,6 +100,7 @@ while True:
         # print(pygame.time.get_ticks())
         # print(time)
         if pygame.time.get_ticks() > time:
+            mixer.Channel(0).play(pygame.mixer.Sound("shoot.wav"))
             # Check laser amount
             # print(len(laser_list))
             if len(laser_list) <=20:
@@ -101,8 +113,8 @@ while True:
 
     for enemy in enemies:
         enemy_angle = (calculate_angle(A, C))
-        enemy.internal_x -= 1 * math.cos(enemy.angle)
-        enemy.internal_y -= 1 * math.sin(enemy.angle)
+        enemy.internal_x -= 1.25 * math.cos(enemy.angle)
+        enemy.internal_y -= 1.25 * math.sin(enemy.angle)
         enemy.rect.x = enemy.internal_x
         enemy.rect.y = enemy.internal_y
         if enemy.rect.x >= 900:
