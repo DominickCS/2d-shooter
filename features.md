@@ -1,6 +1,6 @@
 The features of the shooter zombies style game consist of a stationary player in the middle of the map, able to fire projectiles, laser like and hit enemies to explode/kill them
 
-pickup powerups by shooting them, collateral damage, nuke, double xp, etc
+pickup powerups by shooting them, collateral damage, nuke, double xp, force field
 
 different enemy types, normal enemy - one shot, mini bosses / more hits to kill, higher score, guaranteed drop
 

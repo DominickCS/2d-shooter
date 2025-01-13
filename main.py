@@ -34,11 +34,11 @@ time = 0
 
 laser_list = pygame.sprite.Group()
 player = pygame.sprite.Group()
-turretOne = Turret("White", 20, 20, 0, x=450, y=300)
-# turretOne.rect.x = 450
-# turretOne.rect.y = 300
+turretOne = Turret("White", 16, 16, 0, x=450-16/2, y=300-16/2)
 player.add(turretOne)
 while True:
+    # Debug Mouse Position Coords
+    # print(pygame.mouse.get_pos())
     time
     B = pygame.mouse.get_pos()
     # Statement below is angle debug 
@@ -49,31 +49,36 @@ while True:
             exit()
     # draw all our elements, and update game aspects
     player.draw(screen)
-    if event.type == pygame.MOUSEBUTTONDOWN:
+    click = pygame.mouse.get_pressed()
+    if click[0] == True:
         # Clock Debugging
         # print(pygame.time.get_ticks())
         # print(time)
         if pygame.time.get_ticks() > time:
-            if len(laser_list) <=1:
-                print(calculate_angle(A,B))
+            # Check laser amount
+            # print(len(laser_list))
+            if len(laser_list) <=100:
+                # Print laser angle
+                # print(calculate_angle(A,B))
                 project_angle = ((calculate_angle(A,B)))
-                print("shooting")
-                laser = Turret("White", 5, 5, project_angle , 450, 300)
+                laser = Turret("White", 4, 4, project_angle , turretOne.rect.x + 4, turretOne.rect.y + 4)
                 laser_list.add(laser)
+                time = pygame.time.get_ticks() + 10
 
-                time = pygame.time.get_ticks() + 500
-                # print(len(laser_list))
-                # laser.rect.y = random.randint(0, 600)
-                #pygame.time.delay(100)
     for laser in laser_list:
             laser_list.draw(screen)
             pygame.display.update()
-            laser.rect.x += 5 * math.cos(laser.angle)
-            laser.rect.y += 5 * math.sin(laser.angle)
+            laser.rect.x += 10 * math.cos(laser.angle)
+            laser.rect.y += 10 * math.sin(laser.angle)
             # print(laser.rect.x)
             # print(laser.rect.y)
             if laser.rect.x >= 900:
                 laser.kill()
-                print(len(laser_list))
+            if laser.rect.x <= 0:
+                laser.kill()
+            if laser.rect.y >= 600:
+                laser.kill()
+            if laser.rect.y <= 0:
+                laser.kill()
     pygame.display.update()
-    clock.tick(60)
+    clock.tick(30)
