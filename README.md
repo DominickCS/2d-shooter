@@ -1,13 +1,36 @@
-# 2d-shooter
+# pyZombie - A Python Shooter Game
 
-The features of the shooter zombies style game consist of a stationary player in the middle of the map, able to fire projectiles, laser like and hit enemies to explode/kill them
+## A top-down shooter game where the zombies don't stop! You are destined to die, but how long can you last?
 
-pickup powerups by shooting them, collateral damage, nuke, double xp, force field
+<hr>
 
-different enemy types, normal enemy - one shot, mini bosses / more hits to kill, higher score, guaranteed drop
+### Features
 
-faster enemy speed as time progresses
+- Fire laser like projectiles to kill zombies.
+- Perfect your aim, zombies move quick and you'll need to be accurate for them to not eat you!
 
-limited ammo, have to either wait (max projectiles on screen at once) or reload ammo count should be relatively generous (create ammo instant reload power up if implemented)
+### Planned Features
 
-should feature a scoreboard and start menu
+- Start and Game Over Menus
+- Leaderboards (Internet & Locally stored)
+- Powerups things like Collateral Damage, Nuke, Double Score, Force Field (Invincibility)
+- Various enemy types which require more shots to kill, Mini-bosses! These will be worth more score, and will guarantee a powerup drop!
+- Hardcore mode, zombies begin to run as the time progresses, will you survive?
+
+## Installation Instructions
+
+1. Clone the repository locally
+
+2. Install Requirements within the repositories folder:
+
+```
+# Run the following command in the console
+pip install ./requirements.txt
+```
+
+3. Play!
+
+```
+# Run the following command in the console
+python ./main.py
+```
