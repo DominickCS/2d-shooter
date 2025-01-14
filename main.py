@@ -1,7 +1,6 @@
 import pygame
 from pygame import mixer
 import random
-import numpy as np
 import math
 from sys import exit
 
@@ -10,7 +9,7 @@ my_font = pygame.font.SysFont('Arial', 30)
 
 # Initialize audio
 mixer.init()
-shoot = mixer.music.load("shoot.wav", "hit.wav")
+shoot = mixer.music.load("./sfx/shoot.wav", "./sfx/hit.wav")
 mixer.Channel(1).set_volume(.3) 
 mixer.Channel(0).set_volume(.3)
 
@@ -18,7 +17,7 @@ mixer.Channel(0).set_volume(.3)
 pygame.init()
 
 screen = pygame.display.set_mode((900, 600))
-pygame.display.set_caption("zombies")
+pygame.display.set_caption("pyZombie")
 clock = pygame.time.Clock()
 
 def calculate_angle(p1, p2) -> float:
@@ -98,9 +97,10 @@ while True:
     
     # Laser collision Logic
     if pygame.sprite.groupcollide(laser_list, enemies, True,  True):
-         mixer.Channel(1).play(pygame.mixer.Sound("hit.wav"))
+         mixer.Channel(1).play(pygame.mixer.Sound("./sfx/hit.wav"))
          score += 100
-         print(score)
+        # Output score to console
+        #  print(score)
     # Player Rendering
     player.draw(screen)
     click = pygame.mouse.get_pressed()
@@ -109,7 +109,7 @@ while True:
         # print(pygame.time.get_ticks())
         # print(time)
         if pygame.time.get_ticks() > time:
-            mixer.Channel(0).play(pygame.mixer.Sound("shoot.wav"))
+            mixer.Channel(0).play(pygame.mixer.Sound("./sfx/shoot.wav"))
             # Check laser amount
             # print(len(laser_list))
             if len(laser_list) <=20:
